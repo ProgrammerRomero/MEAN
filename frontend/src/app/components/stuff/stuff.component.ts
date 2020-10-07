@@ -30,6 +30,23 @@ export class StuffComponent implements OnInit {
   }
 
   addStuff(form: NgForm){
-
+    this.stuffService.createStuff(form.value).subscribe(
+      res => {
+        this.getStuff();
+        form.reset();
+      },
+      err => console.error(err)
+    )
   }
+
+  deleteStuff( id: string ){
+    if (confirm('Are youn sure')) {
+      this.stuffService.deleteStuff(id).subscribe(
+        (res) => {
+          this.getStuff();
+        },
+        (err) => console.error(err)
+      );
+  }
+}
 }
