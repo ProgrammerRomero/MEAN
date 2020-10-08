@@ -5,6 +5,9 @@
     <div class="card">
       <div class="card-body">
         <form #stuffForm="ngForm" (ngSubmit)="addStuff(stuffForm)" >
+
+          <input type="hidden" name="_id" [(ngModel)]="stuffService.stuffSelected._id">
+
           <div class="form-group">
             <input type="text"
                     class="form-control"
@@ -34,8 +37,8 @@
                     name="salary"><!--Name to use this imput-->
           </div>
 
-          <button class="btn btn-primary">check</button>
-          <button class="btn btn-secondary">client</button>
+          <button class="btn btn-primary" (click)="resetForm(stuffForm)">Clean</button>
+          <button class="btn btn-secondary">Save</button>
         </form>
       </div>
     </div>
@@ -58,11 +61,11 @@
           <td>{{ stuff.position }}</td>
           <td>{{ stuff.office }}</td>
           <td>
-            <button class="btn btn-secondary btn-sm">
-              <i class="material-icons">child_care</i>
+            <button class="btn btn-secondary btn-sm" (click)="editStuff(stuff)">
+              <i class="material-icons">edit</i>
             </button>
             <button class="btn btn-danger btn-sm" (click)="deleteStuff(stuff._id)">
-              <i class="material-icons">close</i>
+              <i class="material-icons">delete_forever</i>
             </button>
           </td>
 

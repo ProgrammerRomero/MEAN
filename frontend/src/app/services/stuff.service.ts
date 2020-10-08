@@ -10,7 +10,7 @@ export class StuffService {
 
   URL_API = 'http://localhost:4000/api/stuff'
 
-  stuffSelected: Stuff= {
+  stuffSelected: Stuff = {
     name:      '',
     position:  '',
     office:    '',
@@ -26,6 +26,10 @@ export class StuffService {
 
   createStuff(stuff: Stuff) {
     return this.http.post(this.URL_API, stuff )
+  }
+
+  updateStuff(stuff: Stuff){
+    return this.http.put(`${this.URL_API}/${stuff._id}`, stuff);
   }
 
   deleteStuff( _id: string ) {

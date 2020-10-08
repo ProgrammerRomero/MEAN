@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StuffService } from '../../services/stuff.service';
 import { NgForm } from "@angular/forms";
+import { Stuff } from '../../models/stuff';
 
 @Component({
   selector: 'app-stuff',
@@ -20,6 +21,10 @@ export class StuffComponent implements OnInit {
     this.getStuff();
   }
 
+  resetForm(form: NgForm) {
+    form.reset();
+  }
+
   getStuff() {
       this.stuffService.getStuff().subscribe(
       res => {
@@ -30,13 +35,20 @@ export class StuffComponent implements OnInit {
   }
 
   addStuff(form: NgForm){
-    this.stuffService.createStuff(form.value).subscribe(
-      res => {
-        this.getStuff();
-        form.reset();
-      },
-      err => console.error(err)
-    )
+    if (form.value._id) {
+      this.stuffService.updateStuff(form.value).subscribe(
+        (res) => console.log(res),
+        (err) => console.error(err)
+      )
+    } else {
+      this.stuffService.createStuff(form.value).subscribe(
+        res => {
+          this.getStuff();
+          form.reset();
+        },
+        err => console.error(err)
+      )
+    }
   }
 
   deleteStuff( id: string ){
@@ -49,4 +61,8 @@ export class StuffComponent implements OnInit {
       );
   }
 }
+
+  editStuff(stuff: Stuff) {
+    this.stuffService.stuffSelected = stuff;
+  }
 }
